@@ -3,12 +3,22 @@ namespace Helper;
 use Handlebars\Handlebars;
 
 class HelperRoute {
+	public static $cache = false;
+
+	public static function cacheSet ($cache) {
+		self::$cache = $cache;
+	}
+
 	public static function helpers () {
-		$cacheFile = $_SERVER['DOCUMENT_ROOT'] . '/helpers/cache.json';
-		if (!file_exists($cacheFile)) {
-			return;
+		if (!empty(self::$cache)) {
+			$helpers = self::$cache;
+		} else {
+			$cacheFile = $_SERVER['DOCUMENT_ROOT'] . '/helpers/cache.json';
+			if (!file_exists($cacheFile)) {
+				return;
+			}
+			$helpers = (array)json_decode(file_get_contents($cacheFile), true);
 		}
-		$helpers = (array)json_decode(file_get_contents($cacheFile), true);
 		if (!is_array($helpers)) {
 			return;
 		}
