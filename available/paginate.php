@@ -1,6 +1,9 @@
 <?php
 return function ($template, $context, $args, $source) {
 	$pagination = $context->get('pagination');
+  if (empty($pagination)) {
+    return;
+  }
 	$options = [];
 	foreach (explode(' ', $args) as $arg) {
 		if (substr_count($arg, '=') == 0) {
