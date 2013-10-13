@@ -1,19 +1,25 @@
 <?php
 namespace Helper;
-use Handlebars\Handlebars;
 
 class HelperRoute {
 	public static $cache = false;
+	private $slim;
+	private $handlebars;
 
-	public static function cacheSet ($cache) {
+	public function __construct ($slim, $handlebars) {
+		$this->slim = $slim;
+		$this->handlebars = $handlebars;
+	}
+
+	public function cacheSet ($cache) {
 		self::$cache = $cache;
 	}
 
-	public static function helpers () {
+	public function helpers ($root) {
 		if (!empty(self::$cache)) {
 			$helpers = self::$cache;
 		} else {
-			$cacheFile = $_SERVER['DOCUMENT_ROOT'] . '/helpers/cache.json';
+			$cacheFile =  $root . '/helpers/cache.json';
 			if (!file_exists($cacheFile)) {
 				return;
 			}
@@ -22,18 +28,17 @@ class HelperRoute {
 		if (!is_array($helpers)) {
 			return;
 		}
-		$handlebars = Handlebars::factory();
 		foreach ($helpers as $helper) {
-			$filename = $_SERVER['DOCUMENT_ROOT'] . '/helpers/' . $helper . '.php';
+			$filename = $root  . '/helpers/' . $helper . '.php';
 			if (!file_exists($filename)) {
 				continue;
 			}
 			$callback = require $filename;
-			$handlebars->addHelper($helper, $callback);
+			$this->handlebars->addHelper($helper, $callback);
 		}
 	}
 
-	public static function build ($root) {
+	public function build ($root) {
 		$cache = [];
 		$helpers = glob($root . '/helpers/*.php');
 		foreach ($helpers as $helper) {
