@@ -15,8 +15,8 @@ class HelperRoute {
 		self::$cache = $cache;
 	}
 
-	public function helpers ($root) {
-		if (!empty(self::$cache)) {
+	public function helpers ($root, $cache=true) {
+		if (!empty(self::$cache) && $cache) {
 			$helpers = self::$cache;
 		} else {
 			$cacheFile =  $root . '/helpers/cache.json';
@@ -57,5 +57,20 @@ class HelperRoute {
 		}
 		file_put_contents($root . '/js/helpers.js', $jsCache);
 		return $json;
+	}
+
+	public function bundleBuild ($root) {
+		$bundleCache = $root . '/../bundles/cache.json';
+		if (!file_exists($bundleCache)) {
+			return;
+		}
+		$bundles = (array)json_decode(file_get_contents($bundleCache), true);
+		if (!is_array($bundles) || count($bundles) == 0) {
+			return;
+		}
+		foreach ($bundles as $bundle) {
+			$bundleHelpers = $root . '/../bundles/' . $bundle . '/public';
+			$this->build($bundleHelpers);
+		}		
 	}
 }
