@@ -2,7 +2,6 @@
 namespace Helper;
 
 class HelperRoute {
-	public static $cache = false;
 	private $slim;
 	private $handlebars;
 
@@ -11,66 +10,69 @@ class HelperRoute {
 		$this->handlebars = $handlebars;
 	}
 
-	public function cacheSet ($cache) {
-		self::$cache = $cache;
-	}
-
 	public function helpers ($root, $cache=true) {
-		if (!empty(self::$cache) && $cache) {
-			$helpers = self::$cache;
-		} else {
-			$cacheFile =  $root . '/helpers/cache.json';
-			if (!file_exists($cacheFile)) {
-				return;
-			}
-			$helpers = (array)json_decode(file_get_contents($cacheFile), true);
-		}
-		if (!is_array($helpers)) {
-			return;
-		}
-		foreach ($helpers as $helper) {
-			$filename = $root  . '/helpers/' . $helper . '.php';
-			if (!file_exists($filename)) {
-				continue;
-			}
-			$callback = require $filename;
+		require $filename = $root . '/helpers/_build.php';
+		foreach ($helpers as $helper => $callback) {
 			$this->handlebars->addHelper($helper, $callback);
 		}
 	}
 
 	public function build ($root) {
-		$cache = [];
-		$helpers = glob($root . '/helpers/*.php');
-		foreach ($helpers as $helper) {
-			$cache[] = basename($helper, '.php');
-		}
-		$json = json_encode($cache, JSON_PRETTY_PRINT);
-		file_put_contents($root . '/helpers/cache.json', $json);
+		//initialize strings
+		$phpBuffer = '<?php' . "\n" . '$helpers = [];' . "\n\n";
+		$jsBuffer = '';
 
-		$helpers = glob($root . '/helpers/*.js');
-		$jsCache = '';
-		foreach ($helpers as $helper) {
-			if (basename($helper) == 'helpers.js') {
-				continue;
+		//handle vendors
+		$vendorPath = $root . '/../vendor/virtuecenter/helper/available/';
+		$this->compile($vendorPath, $phpBuffer, $jsBuffer);
+		
+		//hanlde bundles
+		$bundleCache = $root . '/../bundles/cache.json';
+		if (file_exists($bundleCache)) {
+			$bundles = (array)json_decode(file_get_contents($bundleCache), true);
+			if (is_array($bundles) && count($bundles) > 0) {
+				foreach ($bundles as $bundle) {
+					$bundlePath = $root . '/../bundles/' . $bundle . '/public/helpers/';
+					$this->compile($bundlePath, $phpBuffer, $jsBuffer);
+				}
 			}
-			$jsCache .= file_get_contents($helper) . "\n\n";
 		}
-		file_put_contents($root . '/js/helpers.js', $jsCache);
-		return $json;
+
+		//handle project
+		$projectPath = $root . '/helpers/';  
+		$this->compile($projectPath, $phpBuffer, $jsBuffer);
+
+		//write compiled helpers
+		$phpCache = $root . '/helpers/_build.php';
+		file_put_contents($root . '/js/helpers.js', $jsBuffer);
+		file_put_contents($phpCache, $phpBuffer);
+
+		ob_start();
+		echo exec('php -l ' . $phpCache);
+		$buffer = ob_get_clean();
+		if (substr_count($buffer, 'No syntax errors detected in') == 1) {
+			echo 'Good: Helper build file is passing PHP error check.', "\n";
+		} else {
+			echo 'Problem: Helper build file is not passing PHP error check.', "\n";
+		}
 	}
 
-	public function bundleBuild ($root) {
-		$bundleCache = $root . '/../bundles/cache.json';
-		if (!file_exists($bundleCache)) {
-			return;
+	private function compile ($root, &$phpBuffer, &$jsBuffer) {
+		$path = $root . '*.php';
+		$helpers = glob($path);
+		foreach ($helpers as $helper) {
+			$name = trim(basename($helper, '.php'));
+			if ($name == '_build') {
+				continue;
+			}
+			$file = substr(str_replace("\r", '', file_get_contents($helper)), 13);
+			$phpBuffer .= '$helpers["' . $name . '"] = ' . $file . "\n\n";
 		}
-		$bundles = (array)json_decode(file_get_contents($bundleCache), true);
-		if (!is_array($bundles) || count($bundles) == 0) {
-			return;
+		$path = $root . '*.js';
+		$helpers = glob($path);
+		foreach ($helpers as $helper) {
+			$name = trim(basename($helper, '.js'));
+			$jsBuffer .= file_get_contents($helper) . "\n\n";
 		}
-		foreach ($bundles as $bundle) {
-			$bundleHelpers = $root . '/../bundles/' . $bundle . '/public';
-			$this->build($bundleHelpers);
-		}		
 	}
 }
