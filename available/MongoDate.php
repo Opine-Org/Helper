@@ -2,12 +2,9 @@
 return function ($template, $context, $args, $source) {
 	$args = str_getcsv(trim($args), ' ');
     $argsCount = count($args);
-    if ($argsCount == 0) {
-    	return '';
-    }
-    $variableName = array_shift($args);
+    $variableName = trim(str_replace(['{', '}'], '', $source));
     $format = 'm/d/Y';
-    if ($argsCount > 1) {
+    if ($argsCount > 0) {
     	$format = array_shift($args);
     }
     $date = $context->get($variableName);
