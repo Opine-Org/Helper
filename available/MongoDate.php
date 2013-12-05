@@ -9,7 +9,7 @@ return function ($template, $context, $args, $source) {
     }
     $date = $context->get($variableName);
     if (!isset($date['sec'])) {
-    	return '';
+    	return date($format, strtotime($date));
     }
     return date($format, $date['sec']);
 };
