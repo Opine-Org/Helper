@@ -5,15 +5,21 @@ return function ($template, $context, $args, $source) {
     $variableName = trim(str_replace(['{', '}'], '', $source));
     $width = 560;
     $height = 315;
-    if ($argsCount > 0) {
+    if ($argsCount > 0 && !empty($args[0])) {
     	$width = array_shift($args);
     }
-    if ($argsCount > 0) {
+    if ($argsCount > 0 && !empty($args[0])) {
     	$height = array_shift($args);
     }
+    $embedded = false;
+    if (substr_count($variableName, '.') == 1) {
+    	$parts = explode('.', $variableName);
+    	$variableName = $parts[0];
+    	$embedded = $parts[1];
+    }
     $id = $context->get($variableName);
-    if (!isset($date['sec'])) {
-    	return date($format, strtotime($date));
+    if ($embedded !== false) {
+    	$id = $id[$embedded];
     }
     return '<iframe width="' . $width . '" height="' . $height. '" src="//www.youtube.com/embed/' . $id . '" frameborder="0" allowfullscreen></iframe>';
 };

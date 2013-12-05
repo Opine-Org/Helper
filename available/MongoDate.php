@@ -4,7 +4,7 @@ return function ($template, $context, $args, $source) {
     $argsCount = count($args);
     $variableName = trim(str_replace(['{', '}'], '', $source));
     $format = 'm/d/Y';
-    if ($argsCount > 0) {
+    if ($argsCount > 0 && !empty($args[0])) {
     	$format = array_shift($args);
     }
     $date = $context->get($variableName);
