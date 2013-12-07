@@ -18,8 +18,15 @@ return function ($template, $context, $args, $source) {
     	$embedded = $parts[1];
     }
     $id = $context->get($variableName);
-    if ($embedded !== false) {
-    	$id = $id[$embedded];
+    if (!is_array($id) && !empty($id)) {
+    	return '<iframe width="' . $width . '" height="' . $height. '" src="//www.youtube.com/embed/' . $id . '" frameborder="0" allowfullscreen></iframe>';
+    } elseif (is_array($id)) {
+    	if ($embedded !== false && isset($id[$embedded])) {
+    		$id = $id[$embedded];
+    	} else {
+    		return '<!-- invalid value: ' . $variableName . '.' . $embedded . ' -->';
+    	}
+    } else {
+    	return '<!-- invalid value: ' . $variableName . ' -->';
     }
-    return '<iframe width="' . $width . '" height="' . $height. '" src="//www.youtube.com/embed/' . $id . '" frameborder="0" allowfullscreen></iframe>';
 };

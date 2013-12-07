@@ -11,6 +11,11 @@ return function ($template, $context, $args, $source) {
     $height = 100;
     $width = 100;
     $cropratio = false;
+    $tag = true;
+    if (in_array('notag', $args)) {
+        $tag = false;
+        $args = array_diff($args, ['notag']);
+    }
     if ($argsCount > 0 && !empty($args[0])) {
     	$width = array_shift($args);
     }
@@ -21,5 +26,9 @@ return function ($template, $context, $args, $source) {
     	$cropratio = array_shift($args);
     }
     $container = \Framework\container();
-    return '<img src="' . $container->imageResizer->getPath($path, $width, $height) . '" />';
+    $url = $container->imageResizer->getPath($path, $width, $height);
+    if ($tag === false) {
+        return $url;
+    }
+    return '<img src="' . $url . '" />';
 };
