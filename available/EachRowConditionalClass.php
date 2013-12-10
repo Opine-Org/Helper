@@ -3,7 +3,7 @@ return function ($template, $context, $args, $source) {
     $engine = $template->getEngine();
     $source = '{{@index}}';
     $index = $engine->render($source, $context);
-    $args = explode(' ', trim($args));
+    $args = str_getcsv(trim($args));
     $modulus = 2;
     $class = 'even';
     if (isset($args[0])) {
