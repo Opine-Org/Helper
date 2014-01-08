@@ -1,9 +1,17 @@
 <?php
 return function ($template, $context, $args, $source) {
-	$args = str_getcsv(trim($args), ' ');
-    $argsCount = count($args);
-    $variableName = trim(str_replace(['{', '}'], '', $source));
+    //usage: {{#MongoDate format="m/d/Y" field="created_date"}}
+
+    $args = $template->htmlArgsToArray($args);
+    if (!isset($args['field'])) {
+        $variableName = trim(str_replace(['{', '}'], '', $source));
+    } else {
+        $variableName = $args['field'];
+    }
     $format = 'm/d/Y';
+    if (isset($args['format'])) {
+        $format = $args['format'];
+    }
     if ($argsCount > 0 && !empty($args[0])) {
     	$format = array_shift($args);
     }
