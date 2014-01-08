@@ -12,9 +12,6 @@ return function ($template, $context, $args, $source) {
     if (isset($args['format'])) {
         $format = $args['format'];
     }
-    if ($argsCount > 0 && !empty($args[0])) {
-    	$format = array_shift($args);
-    }
     $date = $context->get($variableName);
     if (!isset($date['sec'])) {
     	return date($format, strtotime($date));
