@@ -3,7 +3,7 @@ return function ($template, $context, $args, $source) {
     $variableName = trim(str_replace(['{', '}'], '', $source));
     $image = $context->get($variableName);
     if (empty($image) || !isset($image['url'])) {
-    	return '';
+        return '';
     }
     $path = $image['url'];
     $args = str_getcsv(trim($args), ' ');
@@ -17,7 +17,7 @@ return function ($template, $context, $args, $source) {
     }
     $argsCount = count($args);
     if ($argsCount > 0 && !empty($args[0])) {
-    	$width = array_shift($args);
+        $width = array_shift($args);
         if (substr_count($width, '%') == 1) {
             $width = $image['width'] * (((integer)trim($width, '%')) / 100);           
         }
@@ -26,13 +26,13 @@ return function ($template, $context, $args, $source) {
         }
     }
     if ($argsCount > 1 && !empty($args[0])) {
-    	$height = array_shift($args);
+        $height = array_shift($args);
         if (substr_count($height, '%') == 1) {
             $height = $image['height'] * (((integer)trim($height, '%')) / 100);           
         }
     }
     if ($argsCount > 2 && !empty($args[0])) {
-    	$cropratio = array_shift($args);
+        $cropratio = array_shift($args);
     }
     $container = \Framework\container();
     $url = $container->imageResizer->getPath($path, $width, $height);

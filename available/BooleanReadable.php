@@ -1,6 +1,6 @@
 <?php
 return function ($template, $context, $args, $source) {
-	$engine = $template->getEngine();
+    $engine = $template->getEngine();
     $variable = $engine->render($source, $context);
     if ($variable == 't') {
         return 'Yes';

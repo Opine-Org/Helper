@@ -7,13 +7,13 @@ return function ($template, $context, $args, $source) {
     $modulus = 2;
     $class = 'even';
     if (isset($args[0])) {
-    	$modulus = $args[0];
+        $modulus = $args[0];
     }
     if (isset($args[1])) {
-    	$class = $args[1];
+        $class = $args[1];
     }
     if (($index + 1) % $modulus == 0) {
-    	return $class;
+        return $class;
     }
     return '';
 };

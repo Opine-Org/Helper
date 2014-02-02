@@ -3,7 +3,7 @@ return function ($template, $context, $args, $source) {
     $variableName = trim(str_replace(['{', '}'], '', $source));
     $categories = $context->get($variableName);
     if (empty($categories) || !is_array($categories)) {
-    	return '';
+        return '';
     }
     $categoryNames = [];
     $container = \Framework\container();
