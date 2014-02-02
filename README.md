@@ -1,4 +1,4 @@
-helper
+Helper
 ======
 
-Handlebar.js|php Helpers
+Helper callacks for Handlebars.php
