@@ -1,7 +1,7 @@
 <?php
 return function ($template, $context, $args, $source) {
     $db = \Opine\container()->db;
-    $args = $template->htmlArgsToArray($args);
+    $args = $template->parseTagAttributes($args);
     if (isset($args['title'])) {
         $blurb = $db->collection('blurbs')->findOne(['title' => $args['title']]);
     } elseif (isset($args['tag'])) {

@@ -1,8 +1,7 @@
 <?php
 return function ($template, $context, $args, $source) {
     //usage: {{#MongoDate format="m/d/Y" field="created_date"}}
-
-    $args = $template->htmlArgsToArray($args);
+    $args = $template->parseTagAttributes($args);
     if (!isset($args['field'])) {
         $variableName = trim(str_replace(['{', '}'], '', $source));
     } else {
