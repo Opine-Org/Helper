@@ -1,6 +1,6 @@
 <?php
 return function ($template, $context, $args, $source) {
-    $container = \Framework\container();
+    $container = \Opine\container();
     $config = $container->config->disqus;
     if (!isset($config['shortname'])) {
         return '<!-- disqus shortname not present -->';

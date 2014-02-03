@@ -34,7 +34,7 @@ return function ($template, $context, $args, $source) {
     if ($argsCount > 2 && !empty($args[0])) {
         $cropratio = array_shift($args);
     }
-    $container = \Framework\container();
+    $container = \Opine\container();
     $url = $container->imageResizer->getPath($path, $width, $height);
     if ($tag === false) {
         return $url;

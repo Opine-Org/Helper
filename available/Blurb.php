@@ -1,6 +1,6 @@
 <?php
 return function ($template, $context, $args, $source) {
-    $db = Framework\container()->db;
+    $db = \Opine\container()->db;
     $args = $template->htmlArgsToArray($args);
     if (isset($args['title'])) {
         $blurb = $db->collection('blurbs')->findOne(['title' => $args['title']]);
