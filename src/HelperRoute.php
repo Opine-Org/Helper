@@ -25,11 +25,11 @@
 namespace Opine;
 
 class HelperRoute {
-    private $slim;
+    private $route;
     private $handlebars;
 
-    public function __construct ($slim, $handlebars) {
-        $this->slim = $slim;
+    public function __construct ($route, $handlebars) {
+        $this->route = $route;
         $this->handlebars = $handlebars;
     }
 
