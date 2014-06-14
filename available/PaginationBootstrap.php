@@ -1,4 +1,3 @@
-<?php
 return function ($template, $context, $args, $source) {
     ob_start();
     $pagination = $context->get('pagination');

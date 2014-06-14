@@ -6,6 +6,7 @@
         "Handlebars"
     ],
     "license": "MIT",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Ryan Mahoney",
@@ -15,7 +16,13 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "zordius/lightncandy": "dev-master",
+        "opine/container": "dev-master",
+        "opine/db": "dev-master",
+        "phpunit/phpunit": "3.7.32",
+        "opine/config": "dev-master",
+        "opine/framework": "dev-master"
     },
     "autoload": {
         "psr-4": {

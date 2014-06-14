@@ -1,3 +1,4 @@
+<?php
 /**
  * Opine\Helper
  *
@@ -24,4 +25,33 @@
 namespace Opine;
 
 class Helper {
+	private function compile ($name, $type, $partial, $context) {
+        $helpers = [];
+        $hbhelpers = [];
+        switch ($type) {
+            case 'helper':
+                $helpers[$name] = $this->helperGet($name);
+                break;
+
+            case 'hbhelper':
+                $hbhelpers[$name] = $this->hbhelperGet($name);
+                break;
+
+            default:
+                throw new Exception('unknown helper type');
+        }
+        $php = LightnCandy::compile(
+            $partial, 
+            [
+                'flags' => LightnCandy::FLAG_ERROR_LOG | LightnCandy::FLAG_STANDALONE | LightnCandy::FLAG_HANDLEBARSJS,
+                'helpers' => $helpers,
+                'hbhelpers' => $hbhelpers
+            ]
+        );
+        $tmp = __DIR__ . '/' . uniqid() . '.php';
+        file_put_contents($tmp, $php);
+        $function = require $tmp;
+        unlink($tmp);
+        return $function($context);
+    }
 }
