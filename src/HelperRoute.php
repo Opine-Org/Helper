@@ -129,37 +129,41 @@ class HelperRoute {
     public function buildAll () {
         $helpers = '<?php' . "\n" . '$helpers = [];' . "\n";
         $hbhelpers = '<?php' . "\n" . '$hbhelpers = [];' . "\n";
+        $blockhelpers = '<?php' . "\n" . '$blockhelpers = [];' . "\n";
 
         //universal
         $helpers .= $this->build2($this->root . '/../vendors/opine/helper/available/helpers', false);
         $hbhelpers .= $this->build2($this->root . '/../vendors/opine/helper/available/hbhelpers', false);
-
-        //project
-        $helpers .= $this->build2($this->root . '/../public/helpers', false);
-        $hbhelpers .= $this->build2($this->root . '/../public/hbhelpers', false);
+        $blockhelpers .= $this->build2($this->root . '/../vendors/opine/helper/available/blockhelpers', false);  
         
         //bundled
         $bundles = $this->bundleRoute->bundles();
         foreach ($bundles as $bundle) {
             $helpers .= $this->build2($this->root . '/../bundles/' . $bundle . '/public/helpers', false);
-            $hbhelpers .= $this->build2($this->root . '/../bundles/' . $bundle . '/public/helpers', false);
+            $hbhelpers .= $this->build2($this->root . '/../bundles/' . $bundle . '/public/hbhelpers', false);
+            $blockhelpers .= $this->build2($this->root . '/../bundles/' . $bundle . '/public/blockhelpers', false);
         }
+
+        //project
+        $helpers .= $this->build2($this->root . '/../public/helpers', false);
+        $hbhelpers .= $this->build2($this->root . '/../public/hbhelpers', false);
+        $blockhelpers .= $this->build2($this->root . '/../public/blockhelpers', false);
 
         //footers
         $helpers .= 'return $helpers;' . "\n";
         $hbhelpers .= 'return $hbhelpers;' . "\n";
+        $blockhelpers .= 'return $blockhelpers;' . "\n";
 
         //write
-        $helperBuildPath = $this->root . '/../public/helpers';
-        if (!file_exists($helperBuildPath)) {
-            mkdir($helperBuildPath);
-        }
-        file_put_contents($helperBuildPath . '/build.php', $helpers);
+        $this->writeBuild($this->root . '/../public/helpers', $helpers);
+        $this->writeBuild($this->root . '/../public/hbhelpers', $hbhelpers);
+        $this->writeBuild($this->root . '/../public/blockhelpers', $blockhelpers);
+    }
 
-        $helperBuildPath = $this->root . '/../public/hbhelpers';
-        if (!file_exists($helperBuildPath)) {
-            mkdir($helperBuildPath);
+    private function writeBuild ($path, $data) {
+        if (!file_exists($path)) {
+            mkdir($path);
         }
-        file_put_contents($helperBuildPath . '/build.php', $helpers);
+        file_put_contents($path . '/_build.php', $data);        
     }
 }

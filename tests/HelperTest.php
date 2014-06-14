@@ -28,6 +28,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
     private function compile ($name, $type, $partial, $context) {
         $helpers = [];
         $hbhelpers = [];
+        $blockhelpers = [];
         switch ($type) {
             case 'helper':
                 $helpers[$name] = $this->helperGet($name);
@@ -35,6 +36,10 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
 
             case 'hbhelper':
                 $hbhelpers[$name] = $this->hbhelperGet($name);
+                break;
+
+            case 'blockhelpers':
+                $blockhelpers[$name] = $this->blockhelperGet($name);
                 break;
 
             default:
@@ -45,7 +50,8 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
             [
                 'flags' => LightnCandy::FLAG_ERROR_LOG | LightnCandy::FLAG_STANDALONE | LightnCandy::FLAG_HANDLEBARSJS,
                 'helpers' => $helpers,
-                'hbhelpers' => $hbhelpers
+                'hbhelpers' => $hbhelpers,
+                'blockhelpers' => $blockhelpers
             ]
         );
         $tmp = __DIR__ . '/' . uniqid() . '.php';
@@ -63,8 +69,12 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
         return require __DIR__ . '/../available/helpers/' . $helper . '.php';
     }
 
-    private function hbhelperGet ($hbhelper) {
-        return require __DIR__ . '/../available/hbhelpers/' . $hbhelper . '.php';
+    private function hbhelperGet ($helper) {
+        return require __DIR__ . '/../available/helpers/' . $helper . '.php';
+    }
+
+    private function blockhelperGet ($helper) {
+        return require __DIR__ . '/../available/blockhelpers/' . $helper . '.php';
     }
 
     public function testArrayToCSV () {
