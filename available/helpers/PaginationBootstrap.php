@@ -1,8 +1,6 @@
 <?php
-return function ($template, $context, $args, $source) {
+return function ($pagination, $metadata) {
     ob_start();
-    $pagination = $context->get('pagination');
-    $metadata = $context->get('metadata');
     $baseUrl = '/' . $metadata['collection'] . '/' . $metadata['method'] . '/' . $pagination['limit'] . '/';
     //if ($pagination['pageCount'] == 1) {
     //    return '';
@@ -31,11 +29,11 @@ return function ($template, $context, $args, $source) {
     for ($i = $startPage; $i <= $endPage; $i++) {
         $active = '';
         if ($i == $pagination['page']) {
-            $active = ' active';
+            $active = ' class="active"';
         }
         echo '
                 <li>
-                    <a href="', $baseUrl, $i, '" class="', $active, '">', $i, '</a>
+                    <a href="', $baseUrl, $i, '"', $active, '>', $i, '</a>
                 </li>';
     }
     if ($endPage < $pagination['pageCount']) {
