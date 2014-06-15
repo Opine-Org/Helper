@@ -35,8 +35,8 @@ class HelperRoute {
         $this->bundleRoute = $bundleRoute;
     }
 
-    public function helpers ($root, $cache=true) {
-        require $filename = $root . '/helpers/_build.php';
+    public function helpers ($cache=true) {
+        require $filename = $this->root . '/helpers/_build.php';
         foreach ($helpers as $helper => $callback) {
             $this->handlebars->addHelper($helper, $callback);
         }
