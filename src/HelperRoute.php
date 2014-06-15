@@ -27,12 +27,12 @@ namespace Opine;
 class HelperRoute {
     private $root;
     private $handlebars;
-    private $bundleRoot;
+    private $bundleRoute;
 
-    public function __construct ($root, $handlebars, $bundleRoot) {
+    public function __construct ($root, $handlebars, $bundleRoute) {
         $this->root = $root;
         $this->handlebars = $handlebars;
-        $this->bundleRoot = $bundleRoot;
+        $this->bundleRoute = $bundleRoute;
     }
 
     public function helpers ($root, $cache=true) {
