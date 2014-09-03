@@ -52,14 +52,11 @@ class HelperRoute {
         $this->compile($vendorPath, $phpBuffer, $jsBuffer);
         
         //hanlde bundles
-        $bundleCache = $root . '/../bundles/cache.json';
-        if (file_exists($bundleCache)) {
-            $bundles = (array)json_decode(file_get_contents($bundleCache), true);
-            if (is_array($bundles) && count($bundles) > 0) {
-                foreach ($bundles as $bundleName => $bundles) {
-                    $bundlePath = $root . '/../bundles/' . $bundleName . '/public/helpers/';
-                    $this->compile($bundlePath, $phpBuffer, $jsBuffer);
-                }
+        $bundles = $this->bundleRoute->cacheRead();
+        if (is_array($bundles) && count($bundles) > 0) {
+            foreach ($bundles as $bundleName => $bundles) {
+                $bundlePath = $root . '/../bundles/' . $bundleName . '/public/helpers/';
+                $this->compile($bundlePath, $phpBuffer, $jsBuffer);
             }
         }
 
