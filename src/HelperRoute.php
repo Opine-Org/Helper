@@ -47,7 +47,7 @@ class HelperRoute {
         $phpBuffer = '<?php' . "\n" . '$helpers = [];' . "\n\n";
         $jsBuffer = '';
 
-        //handle vendors
+        //handle vendor
         $vendorPath = $root . '/../vendor/opine/helper/available/';
         $this->compile($vendorPath, $phpBuffer, $jsBuffer);
         
@@ -102,7 +102,8 @@ class HelperRoute {
         if (!file_exists($root)) {
             return '';
         }
-        $type = array_pop(explode('/', rtrim($root, '/')));
+        $tmp = explode('/', $root);
+        $type = array_pop($tmp);
         $phpBuffer = '<?php' . "\n" . '$' . $type . ' = [];' . "\n"; 
         if ($headers === false) {
             $phpBuffer = '';
@@ -111,7 +112,7 @@ class HelperRoute {
         $helpers = glob($path);
         foreach ($helpers as $helper) {
             $name = trim(basename($helper, '.php'));
-            if (substr($name, -5) == '_build') {
+            if ($name == '_build') {
                 continue;
             }
             $file = substr(str_replace("\r", '', file_get_contents($helper)), 13);
@@ -129,16 +130,16 @@ class HelperRoute {
         $blockhelpers = '<?php' . "\n" . '$blockhelpers = [];' . "\n";
 
         //universal
-        $helpers .= $this->build2($this->root . '/../vendors/opine/helper/available/helpers', false);
-        $hbhelpers .= $this->build2($this->root . '/../vendors/opine/helper/available/hbhelpers', false);
-        $blockhelpers .= $this->build2($this->root . '/../vendors/opine/helper/available/blockhelpers', false);  
+        $helpers .= $this->build2($this->root . '/../vendor/opine/helper/available/helpers', false);
+        $hbhelpers .= $this->build2($this->root . '/../vendor/opine/helper/available/hbhelpers', false);
+        $blockhelpers .= $this->build2($this->root . '/../vendor/opine/helper/available/blockhelpers', false);  
         
         //bundled
         $bundles = $this->bundleRoute->bundles();
         foreach ($bundles as $bundle) {
-            $helpers .= $this->build2($this->root . '/../bundles/' . $bundle . '/public/helpers', false);
-            $hbhelpers .= $this->build2($this->root . '/../bundles/' . $bundle . '/public/hbhelpers', false);
-            $blockhelpers .= $this->build2($this->root . '/../bundles/' . $bundle . '/public/blockhelpers', false);
+            $helpers .= $this->build2($this->root . '/../bundles/' . $bundle['name'] . '/public/helpers', false);
+            $hbhelpers .= $this->build2($this->root . '/../bundles/' . $bundle['name'] . '/public/hbhelpers', false);
+            $blockhelpers .= $this->build2($this->root . '/../bundles/' . $bundle['name'] . '/public/blockhelpers', false);
         }
 
         //project
@@ -147,9 +148,9 @@ class HelperRoute {
         $blockhelpers .= $this->build2($this->root . '/../public/blockhelpers', false);
 
         //footers
-        $helpers .= 'return $helpers;' . "\n";
-        $hbhelpers .= 'return $hbhelpers;' . "\n";
-        $blockhelpers .= 'return $blockhelpers;' . "\n";
+        $helpers .= 'return $helpers;';
+        $hbhelpers .= 'return $hbhelpers;';
+        $blockhelpers .= 'return $blockhelpers;';
 
         //write
         $this->writeBuild($this->root . '/../public/helpers', $helpers);
@@ -159,7 +160,7 @@ class HelperRoute {
 
     private function writeBuild ($path, $data) {
         if (!file_exists($path)) {
-            mkdir($path);
+            mkdir($path, 777, true);
         }
         file_put_contents($path . '/_build.php', $data);        
     }

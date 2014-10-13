@@ -9,12 +9,12 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
     private $helperRoute;
 
     public function setup () {
-        $this->helperRoute = new helperRoute(false, false);
         date_default_timezone_set('UTC');
         $root = __DIR__ . '/../public';
         $container = new Container($root, $root . '/../container.yml');
         $this->db = $container->db;
         $this->ensureDocuments();
+        $this->helperRoute = $container->helperRoute;
     }
 
     private function ensureDocuments () {
@@ -231,5 +231,9 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
         $helpers = require $tmp;
         $this->assertTrue(is_array($helpers) && count($helpers) > 0);
         unlink($tmp);
+    }
+
+    public function testBuildAll () {
+        $this->helperRoute->buildAll();
     }
 }
