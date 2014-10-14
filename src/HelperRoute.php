@@ -112,9 +112,6 @@ class HelperRoute {
         $helpers = glob($path);
         foreach ($helpers as $helper) {
             $name = trim(basename($helper, '.php'));
-            if ($name == '_build') {
-                continue;
-            }
             $file = substr(str_replace("\r", '', file_get_contents($helper)), 13);
             $phpBuffer .= '$' . $type . '["' . $name . '"] = ' . $file . "\n\n";
         }
@@ -153,15 +150,12 @@ class HelperRoute {
         $blockhelpers .= 'return $blockhelpers;';
 
         //write
-        $this->writeBuild($this->root . '/../public/helpers', $helpers);
-        $this->writeBuild($this->root . '/../public/hbhelpers', $hbhelpers);
-        $this->writeBuild($this->root . '/../public/blockhelpers', $blockhelpers);
+        $this->writeBuild($this->root . '/../cache/helpers.php', $helpers);
+        $this->writeBuild($this->root . '/../cache/hbhelpers.php', $hbhelpers);
+        $this->writeBuild($this->root . '/../cache/blockhelpers.php', $blockhelpers);
     }
 
     private function writeBuild ($path, $data) {
-        if (!file_exists($path)) {
-            mkdir($path, 777, true);
-        }
-        file_put_contents($path . '/_build.php', $data);        
+        file_put_contents($path, $data);        
     }
 }
