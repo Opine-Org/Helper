@@ -20,3 +20,6 @@ services:
         arguments: ['%root%', '@container']
     handlebars:
         class:     'Handlebars\Handlebars'
+    imageResizer:
+        class:     'Opine\ImageResizer'
+        arguments: ['@route']

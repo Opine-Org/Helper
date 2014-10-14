@@ -1,5 +1,6 @@
 <?php
-return function ($categories) {
+return function ($args) {
+    $categories = $args[0];
     if (empty($categories) || !is_array($categories)) {
         return '';
     }

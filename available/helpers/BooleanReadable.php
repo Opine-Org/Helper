@@ -1,5 +1,6 @@
 <?php
-return function ($variable) {
+return function ($args) {
+	$variable = $args[0];
     if ($variable == 't') {
         return 'Yes';
     } elseif ($variable == 'f') {

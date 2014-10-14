@@ -1,19 +1,17 @@
 <?php
-return function ($template, $context, $args, $source) {
-    $engine = $template->getEngine();
-    $source = '{{@index}}';
-    $index = $engine->render($source, $context);
-    $args = str_getcsv(trim($args), ' ');
-    $modulus = 2;
-    $class = 'even';
-    if (isset($args[0])) {
-        $modulus = $args[0];
+return function ($args, $options) {
+    $index = (int)$args[0];
+    if (!isset($options['modulus'])) {
+        $options['modulus'] = 2;
     }
-    if (isset($args[1])) {
-        $class = $args[1];
+    if (!isset($options['class'])) {
+        $options['class'] = 'even';
     }
-    if (($index + 1) % $modulus == 0) {
-        return $class;
+    if (!isset($options['otherclass'])) {
+        $options['otherclass'] = '';
     }
-    return '';
+    if (($index + 1) % $options['modulus'] == 0) {
+        return $options['class'];
+    }
+    return $options['otherclass'];
 };

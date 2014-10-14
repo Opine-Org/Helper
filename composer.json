@@ -22,7 +22,8 @@
         "opine/db": "dev-master",
         "phpunit/phpunit": "3.7.32",
         "opine/config": "dev-master",
-        "opine/framework": "dev-master"
+        "opine/framework": "dev-master",
+        "opine/imageresizer": "dev-master"
     },
     "autoload": {
         "psr-4": {

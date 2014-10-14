@@ -1,5 +1,6 @@
 <?php
-return function ($file) {
+return function ($args) {
+    $file = $args[0];
     $buffer = '';
     if (class_exists('\Opine\Framework')) {
         $included = \Opine\Framework::keyGet('audiojs');

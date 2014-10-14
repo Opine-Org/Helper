@@ -1,5 +1,5 @@
 <?php
-return function ($options) {
+return function ($arguments, $options) {
     $db = \Opine\container()->db;
     if (isset($options['title'])) {
         $blurb = $db->collection('blurbs')->findOne(['title' => $options['title']]);

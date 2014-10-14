@@ -1,7 +1,7 @@
 <?php
-return function ($arrayIn) {
-  	if (!is_array($arrayIn)) {
+return function ($args, $options) {
+  	if (!is_array($args[0])) {
   		return '';
   	}
-    return implode(', ', $arrayIn);
+    return implode(', ', $args[0]);
 };

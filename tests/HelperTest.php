@@ -2,6 +2,7 @@
 namespace Opine;
 use Exception;
 use LightnCandy;
+use MongoDate;
 
 class HelperTest extends \PHPUnit_Framework_TestCase {
     private $db;
@@ -48,7 +49,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
         $php = LightnCandy::compile(
             $partial, 
             [
-                'flags' => LightnCandy::FLAG_ERROR_LOG | LightnCandy::FLAG_STANDALONE | LightnCandy::FLAG_HANDLEBARSJS,
+                'flags' => LightnCandy::FLAG_ERROR_LOG | LightnCandy::FLAG_STANDALONE | LightnCandy::FLAG_HANDLEBARSJS | LightnCandy::FLAG_SPVARS,
                 'helpers' => $helpers,
                 'hbhelpers' => $hbhelpers,
                 'blockhelpers' => $blockhelpers
@@ -152,39 +153,33 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testEachRowConditionalClass () {
-        /*
         $response = $this->compile(
             'EachRowConditionalClass',
             'helper',
-            '{{{EachRowConditionalClass}}}',
-            []
+            '{{#each data}}{{@index}}:{{.}}:{{{EachRowConditionalClass @index class="even" otherclass="odd"}}}{{/each}}',
+            ['data' => ['a', 'b', 'c', 'd', 'e']]
         );
-        $this->assertTrue($response === '');
-        */   
+        $this->assertTrue($response === '0:a:odd1:b:even2:c:odd3:d:even4:e:odd');
     }
 
     public function testImageResize () {
-        /*
         $response = $this->compile(
             'ImageResize',
             'helper',
-            '{{{ImageResize test height="10" width="20"}}}',
-            ['test' => ['url' => 'image.jpg', 'width' => 50, 'height' => 100]]
+            '{{{ImageResize image=test height="10" width="20"}}}',
+            ['test' => ['url' => '/image.jpg', 'width' => 50, 'height' => 100]]
         );
-        echo $response;
-        $this->assertTrue($response === '');
-        */
+        $this->assertTrue($response === '<img src="/imagecache/20/10/20:10/L/image.jpg" />');
     }
 
     public function testMongoDate () {
-        /*
         $response = $this->compile(
             'MongoDate',
             'helper',
-            '{{{MongoDate test format="Y-m-d"}}}'
-            ['test' => new \MongoDate(strototime('2000-01-01'))]
+            '{{{MongoDate test format="Y-m-d"}}}',
+            ['test' => new MongoDate(strtotime('2000-01-01'))]
         );
-        */
+        $this->assertTrue($response == '2000-01-01');
     }
 
     public function testPaginationBootstrap () {
@@ -222,6 +217,16 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
         );
         $this->assertTrue(true);
         */
+    }
+
+    public function testYoutubeEmbed () {
+        $response = $this->compile(
+            'YoutubeEmbed',
+            'helper',
+            '{{{YoutubeEmbed id width="300" height="200"}}}',
+            ['id' => 'p3f-eDzkxcw']
+        );
+        $this->assertTrue($response == '<iframe width="300" height="200" src="https//www.youtube.com/embed/p3f-eDzkxcw" frameborder="0" allowfullscreen></iframe>');
     }
 
     public function testBuild () {

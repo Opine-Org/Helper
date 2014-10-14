@@ -1,10 +1,9 @@
 <?php
-return function ($pagination, $metadata) {
+return function ($args, $options) {
+    $pagination = $args[0];
+    $metadata = $args[1];
     ob_start();
     $baseUrl = '/' . $metadata['collection'] . '/' . $metadata['method'] . '/' . $pagination['limit'] . '/';
-    //if ($pagination['pageCount'] == 1) {
-    //    return '';
-    //}
     $startPage = $pagination['page'] - 4;
     $endPage = $pagination['pageCount'] + 4;
 
