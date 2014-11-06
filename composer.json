@@ -26,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Opine\\Helper\\        ": "src\/"
+            "Opine\\Helper\\": "src\/"
         }
     }
 }
