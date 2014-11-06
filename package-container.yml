@@ -1,4 +1,4 @@
 services:
     helperModel:
         class:     'Opine\Helper\Model'
-        arguments: ['%root%', '@handlebars', '@bundleModel']
+        arguments: ['%root%', '@bundleModel']

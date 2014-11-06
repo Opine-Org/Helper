@@ -26,12 +26,10 @@ namespace Opine\Helper;
 
 class Model {
     private $root;
-    private $handlebars;
     private $bundleModel;
 
-    public function __construct ($root, $handlebars, $bundleModel) {
+    public function __construct ($root, $bundleModel) {
         $this->root = $root;
-        $this->handlebars = $handlebars;
         $this->bundleModel = $bundleModel;
     }
 
