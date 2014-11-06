@@ -1,7 +1,7 @@
 <?php
 return function ($args, $options) {
-    $pagination = $args[0];
-    $metadata = $args[1];
+    $pagination = $options['pagination'];
+    $metadata = $options['metadata'];
     ob_start();
     $baseUrl = '/' . $metadata['collection'] . '/' . $metadata['method'] . '/' . $pagination['limit'] . '/';
     $startPage = $pagination['page'] - 4;
