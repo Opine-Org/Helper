@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,7 +39,7 @@ class Model {
         }
         $tmp = explode('/', $root);
         $type = array_pop($tmp);
-        $phpBuffer = '<?php' . "\n" . '$' . $type . ' = [];' . "\n"; 
+        $phpBuffer = '<?php' . "\n" . '$' . $type . ' = [];' . "\n";
         if ($headers === false) {
             $phpBuffer = '';
         }
@@ -64,14 +64,14 @@ class Model {
         //universal
         $helpers .= $this->build($this->root . '/../vendor/opine/helper/available/helpers', false);
         $hbhelpers .= $this->build($this->root . '/../vendor/opine/helper/available/hbhelpers', false);
-        $blockhelpers .= $this->build($this->root . '/../vendor/opine/helper/available/blockhelpers', false);  
-        
+        $blockhelpers .= $this->build($this->root . '/../vendor/opine/helper/available/blockhelpers', false);
+
         //bundled
         $bundles = $this->bundleModel->bundles();
         foreach ($bundles as $bundle) {
-            $helpers .= $this->build($this->root . '/../bundles/' . $bundle['name'] . '/public/helpers', false);
-            $hbhelpers .= $this->build($this->root . '/../bundles/' . $bundle['name'] . '/public/hbhelpers', false);
-            $blockhelpers .= $this->build($this->root . '/../bundles/' . $bundle['name'] . '/public/blockhelpers', false);
+            $helpers .= $this->build($bundle['root'] . '/helpers', false);
+            $hbhelpers .= $this->build($bundle['root'] . '/hbhelpers', false);
+            $blockhelpers .= $this->build($bundle['root'] . '/blockhelpers', false);
         }
 
         //project
@@ -91,6 +91,6 @@ class Model {
     }
 
     private function writeBuild ($path, $data) {
-        file_put_contents($path, $data);        
+        file_put_contents($path, $data);
     }
 }
