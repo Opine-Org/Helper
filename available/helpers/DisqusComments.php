@@ -1,14 +1,14 @@
 <?php
 return function () {
     $container = \Opine\container();
-    $config = $container->config->disqus;
+    $config = $container->get('config')->disqus;
     if (!isset($config['shortname'])) {
         return '<!-- disqus shortname not present -->';
     }
     return '
         <div id="disqus_thread"></div>
         <script type="text/javascript">
-            var disqus_shortname = "' . $config['shortname'] . '";        
+            var disqus_shortname = "' . $config['shortname'] . '";
             (function() {
                 var dsq = document.createElement("script"); dsq.type = "text/javascript"; dsq.async = true;
                 dsq.src = "http://" + disqus_shortname + ".disqus.com/embed.js";

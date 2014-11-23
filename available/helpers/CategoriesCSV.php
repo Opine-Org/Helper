@@ -6,7 +6,7 @@ return function ($args) {
     }
     $categoryNames = [];
     $container = \Opine\container();
-    $db = $container->db;
+    $db = $container->get('db');
     foreach ($categories as $id) {
         $key = 'categories-' . (string)$id;
         $name = \Opine\Framework::keyGet($key);

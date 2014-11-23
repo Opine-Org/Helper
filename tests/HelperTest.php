@@ -1,25 +1,29 @@
 <?php
 namespace Opine;
+
 use Exception;
 use LightnCandy;
 use MongoDate;
+use PHPUnit_Framework_TestCase;
+use Opine\Config\Service as Config;
 
-class HelperTest extends \PHPUnit_Framework_TestCase {
+class HelperTest extends PHPUnit_Framework_TestCase {
     private $db;
     private $blurbId = 'blurbs:538887dded88e5a5527c1ef6';
     private $helperRoute;
 
     public function setup () {
-        date_default_timezone_set('UTC');
         $root = __DIR__ . '/../public';
-        $container = new Container($root, $root . '/../container.yml');
-        $this->db = $container->db;
+        $config = new Config($root);
+        $config->cacheSet();
+        $container = new Container($root, $config, $root . '/../container.yml');
+        $this->db = $container->get('db');
         $this->ensureDocuments();
-        $this->helperRoute = $container->helperRoute;
+        $this->helperRoute = $container->get('helperRoute');
     }
 
     private function ensureDocuments () {
-        $this->db->documentStage($this->blurbId, [
+        $this->db->document($this->blurbId, [
             'title' => 'Test',
             'body' => 'Test Blurb',
             'tags' => ['Test']
@@ -47,7 +51,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
                 throw new Exception('unknown helper type');
         }
         $php = LightnCandy::compile(
-            $partial, 
+            $partial,
             [
                 'flags' => LightnCandy::FLAG_ERROR_LOG | LightnCandy::FLAG_STANDALONE | LightnCandy::FLAG_HANDLEBARSJS | LightnCandy::FLAG_SPVARS,
                 'helpers' => $helpers,
@@ -80,7 +84,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
 
     public function testArrayToCSV () {
         $response = $this->compile(
-            'ArrayToCSV', 
+            'ArrayToCSV',
             'helper',
             '{{{ArrayToCSV test}}}',
             ['test' => ['A', 'B', 'C']]
@@ -90,7 +94,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
 
     public function testAudioJS () {
         $response = $this->compile(
-            'AudioJS', 
+            'AudioJS',
             'helper',
             '{{{AudioJS file}}}',
             ['file' => 'audio.mp3']
@@ -100,7 +104,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
 
     public function testBlurb () {
         $response = $this->compile(
-            'Blurb', 
+            'Blurb',
             'helper',
             '{{{Blurb title="Test"}}}',
             []
@@ -149,7 +153,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase {
             []
         );
         $this->assertTrue($response === '');
-        */   
+        */
     }
 
     public function testEachRowConditionalClass () {
