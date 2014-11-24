@@ -92,6 +92,9 @@ class Model {
         //bundled
         $bundles = $this->bundleModel->bundles();
         foreach ($bundles as $bundle) {
+            if (!isset($bundle['root'])) {
+                continue;
+            }
             $helpers .= $this->build($bundle['root'] . '/helpers', false);
             $hbhelpers .= $this->build($bundle['root'] . '/hbhelpers', false);
             $blockhelpers .= $this->build($bundle['root'] . '/blockhelpers', false);
