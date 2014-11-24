@@ -31,7 +31,8 @@
             "Opine\\Helper\\": "src/"
         },
         "classmap": [
-            "src/Helper/helpers"
+            "src/Helper/helpers",
+            "src/Helper/Route.php"
         ]
     }
 }
