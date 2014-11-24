@@ -85,9 +85,11 @@ class Model {
         $blockhelpers = '<?php' . "\n" . '$blockhelpers = [];' . "\n";
 
         //universal
+        /*
         $helpers .= $this->build($this->root . '/../vendor/opine/helper/available/helpers', false);
         $hbhelpers .= $this->build($this->root . '/../vendor/opine/helper/available/hbhelpers', false);
         $blockhelpers .= $this->build($this->root . '/../vendor/opine/helper/available/blockhelpers', false);
+        */
 
         //bundled
         $bundles = $this->bundleModel->bundles();
@@ -95,15 +97,15 @@ class Model {
             if (!isset($bundle['root'])) {
                 continue;
             }
-            $helpers .= $this->build($bundle['root'] . '/helpers', false);
-            $hbhelpers .= $this->build($bundle['root'] . '/hbhelpers', false);
-            $blockhelpers .= $this->build($bundle['root'] . '/blockhelpers', false);
+            $helpers .= $this->build($bundle['root'] . '/../helpers', false);
+            $hbhelpers .= $this->build($bundle['root'] . '/../hbhelpers', false);
+            $blockhelpers .= $this->build($bundle['root'] . '/../blockhelpers', false);
         }
 
         //project
-        $helpers .= $this->build($this->root . '/../public/helpers', false);
-        $hbhelpers .= $this->build($this->root . '/../public/hbhelpers', false);
-        $blockhelpers .= $this->build($this->root . '/../public/blockhelpers', false);
+        $helpers .= $this->build($this->root . '/../helpers', false);
+        $hbhelpers .= $this->build($this->root . '/../hbhelpers', false);
+        $blockhelpers .= $this->build($this->root . '/../blockhelpers', false);
 
         //footers
         $helpers .= 'return $helpers;';

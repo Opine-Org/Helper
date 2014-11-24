@@ -4,7 +4,7 @@ namespace Helper;
 class CategoriesCSV {
     private $db;
 
-    public function __constuct ($db) {
+    public function __construct ($db) {
         $this->db = $db;
     }
 
