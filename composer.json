@@ -29,6 +29,9 @@
     "autoload": {
         "psr-4": {
             "Opine\\Helper\\": "src/"
-        }
+        },
+        "classmap": [
+            "src/Helper/helpers"
+        ]
     }
 }

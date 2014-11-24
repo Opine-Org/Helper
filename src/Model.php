@@ -71,7 +71,7 @@ class Model {
         foreach ($helpers as $helper) {
             $name = trim(basename($helper, '.php'));
             //$file = substr(str_replace("\r", '', file_get_contents($helper)), 13);
-            $phpBuffer .= '$' . $type . '["' . $name . '"] = "Opine\\Handlebars\\HelperToService::' . $name . '";' . "\n\n";
+            $phpBuffer .= '$' . $type . '["' . $name . '"] = "\\Opine\\Handlebars\\HelperToService::' . $name . '";' . "\n\n";
         }
         if ($headers === true) {
             $phpBuffer .= 'return $' . $type . ';' . "\n";

@@ -1,0 +1,37 @@
+services:
+    helperArrayToCSV:
+        class:      Helper\helperArray
+    helperAudioJS:
+        class:      Helper\AudioJS
+    helperBlurb:
+        class:      Helper\Blurb
+    helperBooleanReadable:
+        class:      Helper\BooleanReadable
+    helperCapitalize:
+        class:      Helper\Capitalize
+    helperCategoriesCSV:
+        class:      Helper\CategoriesCSV
+    helperContentPartial:
+        class:      Helper\ContentPartial
+        arguments:  ['@db']
+    helperDisqusComments:
+        class:      Helper\DisqusComments
+        arguments:  ['config.disqus']
+    helperEachRowConditionalClass:
+        class:      Helper\EachRowConditionalClass
+    helperFacebookComments:
+        class:      Helper\FacebookComments
+    helperImageResize:
+        class:      Helper\ImageResize
+        arguments:  ['@imageResizer']
+    helperMongoDate:
+        class:      Helper\MongoDate
+    helperPaginationBootstrap:
+        class:      Helper\PaginationBootstrap
+    helperShareThis:
+        class:      Helper\ShareThis
+        arguments:  ['config.sharethis']
+    helperTwitterStream:
+        class:      Helper\TwitterStream
+    helperYoutubeEmbed:
+        class:      Helper\YoutubeEmbed
