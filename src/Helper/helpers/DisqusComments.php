@@ -10,7 +10,7 @@ class DisqusComments {
         }
     }
 
-    public function render () {
+    public function render (Array $args, Array $options) {
         if (empty($this->shortname)) {
             return '<!-- disqus shortname not present -->';
         }

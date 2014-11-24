@@ -8,7 +8,7 @@ class CategoriesCSV {
         $this->db = $db;
     }
 
-    public function render ($args) {
+    public function render (Array $args, Array $options) {
         $categories = $args[0];
         if (empty($categories) || !is_array($categories)) {
             return '';

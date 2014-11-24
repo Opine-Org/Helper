@@ -10,7 +10,7 @@ class ShareThis {
         }
     }
 
-    public function render () {
+    public function render (Array $args, Array $options) {
         if (empty($this->code)) {
             return '<!-- sharethis code not present -->';
         }

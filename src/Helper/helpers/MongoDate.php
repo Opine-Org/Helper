@@ -2,7 +2,7 @@
 namespace Helper;
 
 class MongoDate {
-    public function render (Array $args, Array $options=[]) {
+    public function render (Array $args, Array $options) {
     	//usage: {{MongoDate field format="m/d/Y"}}
         $dateObject = $args[0];
         $format = 'm/d/Y';

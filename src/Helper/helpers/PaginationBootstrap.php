@@ -2,7 +2,7 @@
 namespace Helper;
 
 class PaginationBootstrap {
-    public function render ($args, $options) {
+    public function render (Array $args, Array $options) {
         $pagination = $options['pagination'];
         $metadata = $options['metadata'];
         ob_start();

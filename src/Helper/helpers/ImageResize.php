@@ -8,7 +8,7 @@ class ImagerResize {
         $this->imageResizer = $imageResizer;
     }
 
-    public function render ($args, $options=[]) {
+    public function render (Array $args, Array $options) {
         if (isset($options['image'])) {
             $image = $options['image'];
         } else {

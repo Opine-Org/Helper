@@ -8,7 +8,7 @@ class ContentPartial {
         $this->db = $db;
     }
 
-    public function render ($arguments, $options) {
+    public function render (Array $args, Array $options) {
         if (isset($options['title'])) {
             $partial = $this->db->collection('partials')->findOne(['title' => $options['title']]);
         } elseif (isset($options['code'])) {

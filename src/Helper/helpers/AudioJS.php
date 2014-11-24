@@ -2,7 +2,7 @@
 namespace Helper;
 
 class AudioJS {
-    public function render (Array $args) {
+    public function render (Array $args, Array $options) {
         $file = $args[0];
         $buffer = '';
         if (!isset($_SERVER['AudioJS-Included'])) {

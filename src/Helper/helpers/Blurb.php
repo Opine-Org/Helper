@@ -8,7 +8,7 @@ class Blurb {
         $this->db = $db;
     }
 
-    public function render ($arguments, $options) {
+    public function render (Array $args, Array $options) {
         if (isset($options['title'])) {
             $blurb = $this->db->collection('blurbs')->findOne(['title' => $options['title']]);
         } elseif (isset($options['tag'])) {

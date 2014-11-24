@@ -2,7 +2,7 @@
 namespace Helper;
 
 class BooleanReadable {
-    public function render ($args) {
+    public function render (Array $args, Array $options) {
     	$variable = $args[0];
         if ($variable == 't') {
             return 'Yes';
