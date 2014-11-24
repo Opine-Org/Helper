@@ -6,6 +6,7 @@ use LightnCandy;
 use MongoDate;
 use PHPUnit_Framework_TestCase;
 use Opine\Config\Service as Config;
+use Opine\Container\Service as Container;
 
 class HelperTest extends PHPUnit_Framework_TestCase {
     private $db;
@@ -16,7 +17,7 @@ class HelperTest extends PHPUnit_Framework_TestCase {
         $root = __DIR__ . '/../public';
         $config = new Config($root);
         $config->cacheSet();
-        $container = new Container($root, $config, $root . '/../container.yml');
+        $container = Container::instance($root, $config, $root . '/../container.yml');
         $this->db = $container->get('db');
         $this->ensureDocuments();
         $this->helperRoute = $container->get('helperRoute');

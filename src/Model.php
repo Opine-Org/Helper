@@ -33,7 +33,7 @@ class Model {
         $this->bundleModel = $bundleModel;
     }
 
-    public function build ($root, $headers=true) {
+    public function buildDeprecated ($root, $headers=true) {
         if (!file_exists($root)) {
             return '';
         }
@@ -49,6 +49,29 @@ class Model {
             $name = trim(basename($helper, '.php'));
             $file = substr(str_replace("\r", '', file_get_contents($helper)), 13);
             $phpBuffer .= '$' . $type . '["' . $name . '"] = ' . $file . "\n\n";
+        }
+        if ($headers === true) {
+            $phpBuffer .= 'return $' . $type . ';' . "\n";
+        }
+        return $phpBuffer;
+    }
+
+    public function build ($root, $headers=true) {
+        if (!file_exists($root)) {
+            return '';
+        }
+        $tmp = explode('/', $root);
+        $type = array_pop($tmp);
+        $phpBuffer = '<?php' . "\n" . '$' . $type . ' = [];' . "\n";
+        if ($headers === false) {
+            $phpBuffer = '';
+        }
+        $path = $root . '/*.php';
+        $helpers = glob($path);
+        foreach ($helpers as $helper) {
+            $name = trim(basename($helper, '.php'));
+            //$file = substr(str_replace("\r", '', file_get_contents($helper)), 13);
+            $phpBuffer .= '$' . $type . '["' . $name . '"] = "Opine\\Handlebars\\HelperToService::' . $name . '";' . "\n\n";
         }
         if ($headers === true) {
             $phpBuffer .= 'return $' . $type . ';' . "\n";

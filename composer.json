@@ -1,5 +1,5 @@
 {
-    "name": "opine\/helper",
+    "name": "opine/helper",
     "type": "library",
     "description": "Helper callacks for Handlebars.php",
     "keywords": [
@@ -11,22 +11,24 @@
         {
             "name": "Ryan Mahoney",
             "email": "ryan@virtuecenter.com",
-            "homepage": "http:\/\/opine-php.org",
+            "homepage": "http://opine-php.org",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": ">=5.3.0",
+        "php": ">=5.5.0",
         "zordius/lightncandy": "dev-master",
-        "opine/container": "dev-master",
+        "opine/imageresizer": "dev-master",
         "opine/db": "dev-master",
-        "phpunit/phpunit": "3.7.32",
-        "opine/config": "dev-master",
-        "opine/imageresizer": "dev-master"
+        "opine/container": "dev-master",
+        "opine/config": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.32"
     },
     "autoload": {
         "psr-4": {
-            "Opine\\Helper\\": "src\/"
+            "Opine\\Helper\\": "src/"
         }
     }
 }

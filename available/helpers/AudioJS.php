@@ -5,7 +5,7 @@ return function ($args) {
     if (class_exists('\Opine\Framework')) {
         $included = \Opine\Framework::keyGet('audiojs');
         if ($included === false) {
-            \Opine\Framework::keySet('audiojs', true);
+            //\Opine\Framework::keySet('audiojs', true);
             $buffer .= '
                 <script src="/js/audiojs/audio.min.js"></script>
                 <script>

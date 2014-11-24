@@ -1,7 +1,7 @@
 <?php
 return function () {
     $container = \Opine\container();
-    $config = $container->get('config')->disqus;
+    $config = $container->get('config')->get('disqus');
     if (!isset($config['shortname'])) {
         return '<!-- disqus shortname not present -->';
     }
