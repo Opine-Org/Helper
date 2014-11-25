@@ -1,7 +1,7 @@
 <?php
 namespace Helper;
 
-class ImagerResize {
+class ImageResize {
     private $imageResizer;
 
     public function __construct ($imageResizer) {
