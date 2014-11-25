@@ -33,29 +33,6 @@ class Model {
         $this->bundleModel = $bundleModel;
     }
 
-    public function buildDeprecated ($root, $headers=true) {
-        if (!file_exists($root)) {
-            return '';
-        }
-        $tmp = explode('/', $root);
-        $type = array_pop($tmp);
-        $phpBuffer = '<?php' . "\n" . '$' . $type . ' = [];' . "\n";
-        if ($headers === false) {
-            $phpBuffer = '';
-        }
-        $path = $root . '/*.php';
-        $helpers = glob($path);
-        foreach ($helpers as $helper) {
-            $name = trim(basename($helper, '.php'));
-            $file = substr(str_replace("\r", '', file_get_contents($helper)), 13);
-            $phpBuffer .= '$' . $type . '["' . $name . '"] = ' . $file . "\n\n";
-        }
-        if ($headers === true) {
-            $phpBuffer .= 'return $' . $type . ';' . "\n";
-        }
-        return $phpBuffer;
-    }
-
     public function build ($root, $headers=true) {
         if (!file_exists($root)) {
             return '';
@@ -70,7 +47,6 @@ class Model {
         $helpers = glob($path);
         foreach ($helpers as $helper) {
             $name = trim(basename($helper, '.php'));
-            //$file = substr(str_replace("\r", '', file_get_contents($helper)), 13);
             $phpBuffer .= '$' . $type . '["' . $name . '"] = "\\Opine\\Handlebars\\HelperToService::' . $name . '";' . "\n\n";
         }
         if ($headers === true) {
@@ -84,28 +60,21 @@ class Model {
         $hbhelpers = '<?php' . "\n" . '$hbhelpers = [];' . "\n";
         $blockhelpers = '<?php' . "\n" . '$blockhelpers = [];' . "\n";
 
-        //universal
-        /*
-        $helpers .= $this->build($this->root . '/../vendor/opine/helper/available/helpers', false);
-        $hbhelpers .= $this->build($this->root . '/../vendor/opine/helper/available/hbhelpers', false);
-        $blockhelpers .= $this->build($this->root . '/../vendor/opine/helper/available/blockhelpers', false);
-        */
-
         //bundled
         $bundles = $this->bundleModel->bundles();
         foreach ($bundles as $bundle) {
             if (!isset($bundle['root'])) {
                 continue;
             }
-            $helpers .= $this->build($bundle['root'] . '/../helpers', false);
-            $hbhelpers .= $this->build($bundle['root'] . '/../hbhelpers', false);
-            $blockhelpers .= $this->build($bundle['root'] . '/../blockhelpers', false);
+            $helpers .= $this->build($bundle['root'] . '/../app/helpers', false);
+            $hbhelpers .= $this->build($bundle['root'] . '/../app/hbhelpers', false);
+            $blockhelpers .= $this->build($bundle['root'] . '/../app/blockhelpers', false);
         }
 
         //project
-        $helpers .= $this->build($this->root . '/../helpers', false);
-        $hbhelpers .= $this->build($this->root . '/../hbhelpers', false);
-        $blockhelpers .= $this->build($this->root . '/../blockhelpers', false);
+        $helpers .= $this->build($this->root . '/../app/helpers', false);
+        $hbhelpers .= $this->build($this->root . '/../app/hbhelpers', false);
+        $blockhelpers .= $this->build($this->root . '/../app/blockhelpers', false);
 
         //footers
         $helpers .= 'return $helpers;';
@@ -113,9 +82,9 @@ class Model {
         $blockhelpers .= 'return $blockhelpers;';
 
         //write
-        $this->writeBuild($this->root . '/../cache/helpers.php', $helpers);
-        $this->writeBuild($this->root . '/../cache/hbhelpers.php', $hbhelpers);
-        $this->writeBuild($this->root . '/../cache/blockhelpers.php', $blockhelpers);
+        $this->writeBuild($this->root . '/../var/cache/helpers.php', $helpers);
+        $this->writeBuild($this->root . '/../var/cache/hbhelpers.php', $hbhelpers);
+        $this->writeBuild($this->root . '/../var/cache/blockhelpers.php', $blockhelpers);
     }
 
     private function writeBuild ($path, $data) {
