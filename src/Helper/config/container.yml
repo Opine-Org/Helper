@@ -1,4 +1,7 @@
 services:
+    helperRoute:
+        class:      Opine\Helper\Route
+        arguments:  ['@route']
     helperArrayToCSV:
         class:      Helper\helperArray
     helperAudioJS:
