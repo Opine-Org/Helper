@@ -17,7 +17,7 @@ class HelperTest extends PHPUnit_Framework_TestCase {
         $root = __DIR__ . '/../public';
         $config = new Config($root);
         $config->cacheSet();
-        $container = Container::instance($root, $config, $root . '/../container.yml');
+        $container = Container::instance($root, $config, $root . '/../config/container.yml');
         $this->db = $container->get('db');
         $this->ensureDocuments();
         $this->helperRoute = $container->get('helperRoute');
