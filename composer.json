@@ -21,7 +21,8 @@
         "opine/imageresizer": "dev-master",
         "opine/db": "dev-master",
         "opine/container": "dev-master",
-        "opine/config": "dev-master"
+        "opine/config": "dev-master",
+        "opine/interface": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.32"
