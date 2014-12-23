@@ -1,4 +1,4 @@
 services:
-    helperModel:
+    helperServiceModel:
         class:     'Opine\Helper\Model'
         arguments: ['%root%', '@bundleModel']
