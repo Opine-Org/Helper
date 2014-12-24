@@ -21,7 +21,7 @@
         "opine/imageresizer": "dev-master",
         "opine/db"          : "dev-master",
         "opine/container"   : "dev-master",
-        "opine/config"      : "dev-master",
+        "opine/config"      : "3.0.0",
         "opine/interfaces"  : "dev-master"
     },
     "require-dev": {
