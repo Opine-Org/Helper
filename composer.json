@@ -20,7 +20,7 @@
         "opine/lightncandy" : "dev-master",
         "opine/imageresizer": "dev-master",
         "opine/db"          : "dev-master",
-        "opine/container"   : "dev-master",
+        "opine/container"   : "2.0.2",
         "opine/config"      : "3.0.0",
         "opine/interfaces"  : "1.0.0"
     },
