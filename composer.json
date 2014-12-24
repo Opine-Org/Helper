@@ -6,7 +6,6 @@
         "Handlebars"
     ],
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name"    : "Ryan Mahoney",
@@ -17,11 +16,11 @@
     ],
     "require": {
         "php"               : ">=5.5.0",
-        "opine/lightncandy" : "dev-master",
+        "opine/lightncandy" : "1.0.0",
         "opine/imageresizer": "2.0.0",
-        "opine/db"          : "2.0.0",
-        "opine/container"   : "2.0.3",
-        "opine/config"      : "3.0.0",
+        "opine/db"          : "2.0.1",
+        "opine/container"   : "2.0.4",
+        "opine/config"      : "3.0.1",
         "opine/interfaces"  : "1.0.0"
     },
     "require-dev": {
@@ -35,5 +34,5 @@
             "src/Helper/app/helpers"
         ]
     },
-    "version": "2.0.0"
+    "version": "2.0.1"
 }
