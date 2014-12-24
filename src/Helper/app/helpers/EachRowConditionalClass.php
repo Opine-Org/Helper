@@ -1,9 +1,11 @@
 <?php
 namespace Helper;
 
-class EachRowConditionalClass {
-    public function render (Array $args, Array $options) {
-        $index = (int)$args[0];
+class EachRowConditionalClass
+{
+    public function render(Array $args, Array $options)
+    {
+        $index = (int) $args[0];
         if (!isset($options['modulus'])) {
             $options['modulus'] = 2;
         }
@@ -16,6 +18,7 @@ class EachRowConditionalClass {
         if (($index + 1) % $options['modulus'] == 0) {
             return $options['class'];
         }
+
         return $options['otherclass'];
     }
 }

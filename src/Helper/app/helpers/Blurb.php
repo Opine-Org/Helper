@@ -1,14 +1,17 @@
 <?php
 namespace Helper;
 
-class Blurb {
+class Blurb
+{
     private $db;
 
-    public function __construct ($db) {
+    public function __construct($db)
+    {
         $this->db = $db;
     }
 
-    public function render (Array $args, Array $options) {
+    public function render(Array $args, Array $options)
+    {
         if (isset($options['title'])) {
             $blurb = $this->db->collection('blurbs')->findOne(['title' => $options['title']]);
         } elseif (isset($options['tag'])) {
@@ -19,6 +22,7 @@ class Blurb {
         if (isset($blurb['_id'])) {
             return $blurb['body'];
         }
+
         return '';
     }
 }

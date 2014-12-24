@@ -23,18 +23,23 @@
  * THE SOFTWARE.
  */
 namespace Opine\Helper;
-use Exception;
 
-class Route {
+
+class Route
+{
     private $route;
 
-    public function __construct ($route) {
+    public function __construct($route)
+    {
         $this->route = $route;
     }
 
-    public function paths () {}
+    public function paths()
+    {
+    }
 
-    public static function location () {
+    public static function location()
+    {
         return __DIR__;
     }
 }

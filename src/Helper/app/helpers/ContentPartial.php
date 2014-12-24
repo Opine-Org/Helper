@@ -1,14 +1,17 @@
 <?php
 namespace Helper;
 
-class ContentPartial {
+class ContentPartial
+{
     private $db;
 
-    public function __construct ($db) {
+    public function __construct($db)
+    {
         $this->db = $db;
     }
 
-    public function render (Array $args, Array $options) {
+    public function render(Array $args, Array $options)
+    {
         if (isset($options['title'])) {
             $partial = $this->db->collection('partials')->findOne(['title' => $options['title']]);
         } elseif (isset($options['code'])) {
@@ -19,6 +22,7 @@ class ContentPartial {
         if (isset($partial['_id'])) {
             return $partial['body'];
         }
+
         return '';
     }
 }

@@ -1,8 +1,10 @@
 <?php
 namespace Helper;
 
-class AudioJS {
-    public function render (Array $args, Array $options) {
+class AudioJS
+{
+    public function render(Array $args, Array $options)
+    {
         $file = $args[0];
         $buffer = '';
         if (!isset($_SERVER['AudioJS-Included'])) {
@@ -16,7 +18,7 @@ class AudioJS {
                 </script>';
         }
 
-        $buffer .= '<audio src="' . $file . '" preload="auto" />';
+        $buffer .= '<audio src="'.$file.'" preload="auto" />';
 
         return $buffer;
     }

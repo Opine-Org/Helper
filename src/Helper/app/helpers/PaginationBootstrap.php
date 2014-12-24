@@ -1,12 +1,14 @@
 <?php
 namespace Helper;
 
-class PaginationBootstrap {
-    public function render (Array $args, Array $options) {
+class PaginationBootstrap
+{
+    public function render(Array $args, Array $options)
+    {
         $pagination = $options['pagination'];
         $metadata = $options['metadata'];
         ob_start();
-        $baseUrl = '/' . $metadata['collection'] . '/' . $metadata['method'] . '/' . $pagination['limit'] . '/';
+        $baseUrl = '/'.$metadata['collection'].'/'.$metadata['method'].'/'.$pagination['limit'].'/';
         $startPage = $pagination['page'] - 4;
         $endPage = $pagination['pageCount'] + 4;
 
@@ -49,6 +51,7 @@ class PaginationBootstrap {
             </div>';
 
         $buffer = ob_get_clean();
+
         return $buffer;
     }
 }

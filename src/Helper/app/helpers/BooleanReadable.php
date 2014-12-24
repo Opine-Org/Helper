@@ -1,9 +1,11 @@
 <?php
 namespace Helper;
 
-class BooleanReadable {
-    public function render (Array $args, Array $options) {
-    	$variable = $args[0];
+class BooleanReadable
+{
+    public function render(Array $args, Array $options)
+    {
+        $variable = $args[0];
         if ($variable == 't') {
             return 'Yes';
         } elseif ($variable == 'f') {

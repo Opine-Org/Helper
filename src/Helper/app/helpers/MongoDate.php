@@ -1,9 +1,11 @@
 <?php
 namespace Helper;
 
-class MongoDate {
-    public function render (Array $args, Array $options) {
-    	//usage: {{MongoDate field format="m/d/Y"}}
+class MongoDate
+{
+    public function render(Array $args, Array $options)
+    {
+        //usage: {{MongoDate field format="m/d/Y"}}
         $dateObject = $args[0];
         $format = 'm/d/Y';
         if (isset($options['format'])) {
@@ -19,6 +21,7 @@ class MongoDate {
                 return '[Array]';
             }
         }
+
         return date($format, strtotime($dateObject));
     }
 }

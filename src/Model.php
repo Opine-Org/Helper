@@ -24,41 +24,46 @@
  */
 namespace Opine\Helper;
 
-class Model {
+class Model
+{
     private $root;
     private $bundleModel;
 
-    public function __construct ($root, $bundleModel) {
+    public function __construct($root, $bundleModel)
+    {
         $this->root = $root;
         $this->bundleModel = $bundleModel;
     }
 
-    public function build ($root, $headers=true) {
+    public function build($root, $headers = true)
+    {
         if (!file_exists($root)) {
             return '';
         }
         $tmp = explode('/', $root);
         $type = array_pop($tmp);
-        $phpBuffer = '<?php' . "\n" . '$' . $type . ' = [];' . "\n";
+        $phpBuffer = '<?php'."\n".'$'.$type.' = [];'."\n";
         if ($headers === false) {
             $phpBuffer = '';
         }
-        $path = $root . '/*.php';
+        $path = $root.'/*.php';
         $helpers = glob($path);
         foreach ($helpers as $helper) {
             $name = trim(basename($helper, '.php'));
-            $phpBuffer .= '$' . $type . '["' . $name . '"] = "\\Opine\\Handlebars\\HelperToService::' . $name . '";' . "\n\n";
+            $phpBuffer .= '$'.$type.'["'.$name.'"] = "\\Opine\\Handlebars\\HelperToService::'.$name.'";'."\n\n";
         }
         if ($headers === true) {
-            $phpBuffer .= 'return $' . $type . ';' . "\n";
+            $phpBuffer .= 'return $'.$type.';'."\n";
         }
+
         return $phpBuffer;
     }
 
-    public function buildAll () {
-        $helpers = '<?php' . "\n" . '$helpers = [];' . "\n";
-        $hbhelpers = '<?php' . "\n" . '$hbhelpers = [];' . "\n";
-        $blockhelpers = '<?php' . "\n" . '$blockhelpers = [];' . "\n";
+    public function buildAll()
+    {
+        $helpers = '<?php'."\n".'$helpers = [];'."\n";
+        $hbhelpers = '<?php'."\n".'$hbhelpers = [];'."\n";
+        $blockhelpers = '<?php'."\n".'$blockhelpers = [];'."\n";
 
         //bundled
         $bundles = $this->bundleModel->bundles();
@@ -66,15 +71,15 @@ class Model {
             if (!isset($bundle['root'])) {
                 continue;
             }
-            $helpers .= $this->build($bundle['root'] . '/../app/helpers', false);
-            $hbhelpers .= $this->build($bundle['root'] . '/../app/hbhelpers', false);
-            $blockhelpers .= $this->build($bundle['root'] . '/../app/blockhelpers', false);
+            $helpers .= $this->build($bundle['root'].'/../app/helpers', false);
+            $hbhelpers .= $this->build($bundle['root'].'/../app/hbhelpers', false);
+            $blockhelpers .= $this->build($bundle['root'].'/../app/blockhelpers', false);
         }
 
         //project
-        $helpers .= $this->build($this->root . '/../app/helpers', false);
-        $hbhelpers .= $this->build($this->root . '/../app/hbhelpers', false);
-        $blockhelpers .= $this->build($this->root . '/../app/blockhelpers', false);
+        $helpers .= $this->build($this->root.'/../app/helpers', false);
+        $hbhelpers .= $this->build($this->root.'/../app/hbhelpers', false);
+        $blockhelpers .= $this->build($this->root.'/../app/blockhelpers', false);
 
         //footers
         $helpers .= 'return $helpers;';
@@ -82,12 +87,13 @@ class Model {
         $blockhelpers .= 'return $blockhelpers;';
 
         //write
-        $this->writeBuild($this->root . '/../var/cache/helpers.php', $helpers);
-        $this->writeBuild($this->root . '/../var/cache/hbhelpers.php', $hbhelpers);
-        $this->writeBuild($this->root . '/../var/cache/blockhelpers.php', $blockhelpers);
+        $this->writeBuild($this->root.'/../var/cache/helpers.php', $helpers);
+        $this->writeBuild($this->root.'/../var/cache/hbhelpers.php', $hbhelpers);
+        $this->writeBuild($this->root.'/../var/cache/blockhelpers.php', $blockhelpers);
     }
 
-    private function writeBuild ($path, $data) {
+    private function writeBuild($path, $data)
+    {
         file_put_contents($path, $data);
     }
 }

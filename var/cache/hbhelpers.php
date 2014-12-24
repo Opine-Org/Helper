@@ -1,3 +1,4 @@
 <?php
 $hbhelpers = [];
+
 return $hbhelpers;
